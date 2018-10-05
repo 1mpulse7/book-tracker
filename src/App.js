@@ -55,27 +55,26 @@ class BooksApp extends React.Component {
       <body>
       <h1> My Book Tracker </h1>
         <section className="bookshelf">
-          <CurrentlyReading booksReading={this.state.books.filter(book => book.readState == 'reading')}/>
-          <WillRead booksToRead={this.state.books.filter(book => book.readState == 'onList')}/>
-          <HaveRead readBooks={this.state.books.filter(book => book.readState == 'read')}/>
+          <CurrentlyReading booksReading={this.state.books.filter(book => book.readState === 'reading')}/>
+          <WillRead booksToRead={this.state.books.filter(book => book.readState === 'onList')}/>
+          <HaveRead readBooks={this.state.books.filter(book => book.readState === 'read')}/>
         </section>
       </body>
     )
   }
 }
 
+
+/* I created three shelves to filter how the books are displayed. each shelf
+checks to see what the books readState value is in the json using filter. the new
+array of books is then passed to the BookCreator component. */
+
 class CurrentlyReading extends React.Component {
   render() {
     return (
       <section>
         <h3>Currently Reading</h3>
-        <ol className="bookshelf-books">
-        {
-          this.props.booksReading.map(book => (
-            <li key={book.title}>{book.title}</li>
-          ))
-        }
-        </ol>
+        <BookCreator booksToCreate={this.props.booksReading}/>
       </section>
     )
   }
@@ -86,13 +85,7 @@ class WillRead extends React.Component {
     return (
       <section>
         <h3>Books to Read</h3>
-        <ol className="bookshelf-books">
-        {
-          this.props.booksToRead.map(book => (
-            <li key={book.title}>{book.title}</li>
-          ))
-        }
-        </ol>
+        <BookCreator booksToCreate={this.props.booksToRead}/>
       </section>
     )
   }
@@ -103,14 +96,43 @@ class HaveRead extends React.Component {
     return (
       <section>
         <h3>Books I Have Read</h3>
-        <ol className="bookshelf-books">
-        {
-          this.props.readBooks.map(book => (
-            <li key={book.title}>{book.title}</li>
-          ))
-        }
-        </ol>
+        <BookCreator booksToCreate={this.props.readBooks}/>
       </section>
+    )
+  }
+}
+
+
+// component that creates the books into list items
+
+class BookCreator extends React.Component {
+  render() {
+    return (
+      <ol className="books-grid">
+      {
+        this.props.booksToCreate.map(book => (
+        <li key={book.title}>
+          <div className="book">
+            <div className="book-top">
+              <div className="book-cover" style={{ width: 128, height: 192, backgroundImage: book.coverImage }}></div>
+              <div className="book-shelf-changer">
+                <select>
+                  <option value="move" disabled>Move to...</option>
+                  <option value="currentlyReading">Currently Reading</option>
+                  <option value="wantToRead">Want to Read</option>
+                  <option value="read">Read</option>
+                  <option value="none">None</option>
+                </select>
+              </div>
+            </div>
+            <div className="book-title">{book.title}</div>
+            <div className="book-authors">{book.author}</div>
+          </div>
+        </li>
+      ))
+      }
+      </ol>
+
     )
   }
 }
