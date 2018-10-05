@@ -52,8 +52,8 @@ class BooksApp extends React.Component {
 
   render() {
     return (
-      <body>
-      <h1> My Book Tracker </h1>
+      <body className="list-books">
+      <div className="list-books-title"><h1>My Book Tracker</h1></div>
         <section className="bookshelf">
           <CurrentlyReading booksReading={this.state.books.filter(book => book.readState === 'reading')}/>
           <WillRead booksToRead={this.state.books.filter(book => book.readState === 'onList')}/>
@@ -67,13 +67,14 @@ class BooksApp extends React.Component {
 
 /* I created three shelves to filter how the books are displayed. each shelf
 checks to see what the books readState value is in the json using filter. the new
-array of books is then passed to the BookCreator component. */
+array of books is then passed to the BookCreator component. Thinking of eliminating
+two of the shelves if possibly to keep it DRY */
 
 class CurrentlyReading extends React.Component {
   render() {
     return (
-      <section>
-        <h3>Currently Reading</h3>
+      <section className="bookshelf">
+        <h3 className="bookshelf-title">Currently Reading</h3>
         <BookCreator booksToCreate={this.props.booksReading}/>
       </section>
     )
@@ -83,9 +84,11 @@ class CurrentlyReading extends React.Component {
 class WillRead extends React.Component {
   render() {
     return (
-      <section>
-        <h3>Books to Read</h3>
-        <BookCreator booksToCreate={this.props.booksToRead}/>
+      <section className="bookshelf">
+        <h3 className="bookshelf-title">Books to Read</h3>
+        <div className="bookshelf-books">
+          <BookCreator booksToCreate={this.props.booksToRead}/>
+        </div>
       </section>
     )
   }
@@ -94,8 +97,8 @@ class WillRead extends React.Component {
 class HaveRead extends React.Component {
   render() {
     return (
-      <section>
-        <h3>Books I Have Read</h3>
+      <section className="bookshelf">
+        <h3 className="bookshelf-title">Books I Have Read</h3>
         <BookCreator booksToCreate={this.props.readBooks}/>
       </section>
     )
