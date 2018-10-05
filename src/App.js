@@ -55,9 +55,9 @@ class BooksApp extends React.Component {
       <body>
       <h1> My Book Tracker </h1>
         <section className="bookshelf">
-          <CurrentlyReading books={this.state.books}/>
-          <WillRead books={this.state.books.filter()}/>
-          <HaveRead books={this.state.books}/>
+          <CurrentlyReading booksReading={this.state.books.filter(book => book.readState == 'reading')}/>
+          <WillRead booksToRead={this.state.books.filter(book => book.readState == 'onList')}/>
+          <HaveRead readBooks={this.state.books.filter(book => book.readState == 'read')}/>
         </section>
       </body>
     )
@@ -70,7 +70,11 @@ class CurrentlyReading extends React.Component {
       <section>
         <h3>Currently Reading</h3>
         <ol className="bookshelf-books">
-          <li>{this.props.books[0].author}</li>
+        {
+          this.props.booksReading.map(book => (
+            <li key={book.title}>{book.title}</li>
+          ))
+        }
         </ol>
       </section>
     )
@@ -83,8 +87,11 @@ class WillRead extends React.Component {
       <section>
         <h3>Books to Read</h3>
         <ol className="bookshelf-books">
-          <li>Book</li>
-          <li>Book</li>
+        {
+          this.props.booksToRead.map(book => (
+            <li key={book.title}>{book.title}</li>
+          ))
+        }
         </ol>
       </section>
     )
@@ -97,8 +104,11 @@ class HaveRead extends React.Component {
       <section>
         <h3>Books I Have Read</h3>
         <ol className="bookshelf-books">
-          <li>Book</li>
-          <li>Book</li>
+        {
+          this.props.readBooks.map(book => (
+            <li key={book.title}>{book.title}</li>
+          ))
+        }
         </ol>
       </section>
     )
