@@ -68,7 +68,7 @@ class BooksApp extends React.Component {
 /* I created three shelves to filter how the books are displayed. each shelf
 checks to see what the books readState value is in the json using filter. the new
 array of books is then passed to the BookCreator component. Thinking of eliminating
-two of the shelves if possibly to keep it DRY */
+two of the shelves if possible to keep it DRY */
 
 class CurrentlyReading extends React.Component {
   render() {
@@ -139,5 +139,4 @@ class BookCreator extends React.Component {
     )
   }
 }
-
 export default BooksApp
