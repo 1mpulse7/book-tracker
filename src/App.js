@@ -1,6 +1,8 @@
 import React from 'react'
 // import * as BooksAPI from './BooksAPI'
 import './App.css'
+import Shelf from './components/shelf.js'
+import BookCreator from './components/book.js'
 
 class BooksApp extends React.Component {
   state = {
@@ -9,25 +11,25 @@ class BooksApp extends React.Component {
         title: 'To Kill A Mockingbird',
         author: 'Harper Lee',
         coverImage: 'url("http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api")',
-        readState: 'reading'
+        readState: 'CurrentlyReading'
       },
       {
         title: "Ender's Game",
         author: 'Orson Scott Card',
         coverImage: 'url("http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api")',
-        readState: 'reading'
+        readState: 'CurrentlyReading'
       },
       {
         title: "Harry Potter and the Sorcerer's Stone",
         author: 'J.K. Rowling',
         coverImage: 'url("http://books.google.com/books/content?id=wrOQLV6xB-wC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72G3gA5A-Ka8XjOZGDFLAoUeMQBqZ9y-LCspZ2dzJTugcOcJ4C7FP0tDA8s1h9f480ISXuvYhA_ZpdvRArUL-mZyD4WW7CHyEqHYq9D3kGnrZCNiqxSRhry8TiFDCMWP61ujflB&source=gbs_api")',
-        readState: 'onList'
+        readState: 'wantToRead'
       },
       {
         title: '1776',
         author: 'David McCullough',
         coverImage: 'url("http://books.google.com/books/content?id=uu1mC6zWNTwC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73pGHfBNSsJG9Y8kRBpmLUft9O4BfItHioHolWNKOdLavw-SLcXADy3CPAfJ0_qMb18RmCa7Ds1cTdpM3dxAGJs8zfCfm8c6ggBIjzKT7XR5FIB53HHOhnsT7a0Cc-PpneWq9zX&source=gbs_api")',
-        readState: 'onList'
+        readState: 'wantToRead'
       },
       {
         title: 'The Hobbit',
@@ -52,31 +54,26 @@ class BooksApp extends React.Component {
 
   render() {
     return (
-      <body className="list-books">
-      <div className="list-books-title"><h1>My Book Tracker</h1></div>
-        <section className="bookshelf">
-          <CurrentlyReading booksReading={this.state.books.filter(book => book.readState === 'reading')}/>
-          <WillRead booksToRead={this.state.books.filter(book => book.readState === 'onList')}/>
-          <HaveRead readBooks={this.state.books.filter(book => book.readState === 'read')}/>
-        </section>
+      <body className="app">
+      <BookShelf booksList={this.state.books}/>
       </body>
     )
   }
 }
 
+// component for the actual BookShelf
 
-/* I created three shelves to filter how the books are displayed. each shelf
-checks to see what the books readState value is in the json using filter. the new
-array of books is then passed to the BookCreator component. Thinking of eliminating
-two of the shelves if possible to keep it DRY */
-
-class CurrentlyReading extends React.Component {
+class BookShelf extends React.Component {
   render() {
     return (
-      <section className="bookshelf">
-        <h3 className="bookshelf-title">Currently Reading</h3>
-        <BookCreator booksToCreate={this.props.booksReading}/>
-      </section>
+      <div>
+        <div className="list-books-title"><h1>My Book Tracker</h1></div>
+        <section className="bookshelf">
+          <Shelf title="Currently Reading"/>
+          <Shelf title="Want To Read"/>
+          <Shelf title="Already Read"/>
+        </section>
+      </div>
     )
   }
 }
@@ -107,36 +104,4 @@ class HaveRead extends React.Component {
 
 
 // component that creates the books into list items
-
-class BookCreator extends React.Component {
-  render() {
-    return (
-      <ol className="books-grid">
-      {
-        this.props.booksToCreate.map(book => (
-        <li key={book.title}>
-          <div className="book">
-            <div className="book-top">
-              <div className="book-cover" style={{ width: 128, height: 192, backgroundImage: book.coverImage }}></div>
-              <div className="book-shelf-changer">
-                <select>
-                  <option value="move" disabled>Move to...</option>
-                  <option value="currentlyReading">Currently Reading</option>
-                  <option value="wantToRead">Want to Read</option>
-                  <option value="read">Read</option>
-                  <option value="none">None</option>
-                </select>
-              </div>
-            </div>
-            <div className="book-title">{book.title}</div>
-            <div className="book-authors">{book.author}</div>
-          </div>
-        </li>
-      ))
-      }
-      </ol>
-
-    )
-  }
-}
 export default BooksApp
