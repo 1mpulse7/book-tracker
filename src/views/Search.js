@@ -1,3 +1,5 @@
+import React from 'react';
+
 // component for adding search page
 
 class SearchPage extends React.Component {
@@ -19,7 +21,12 @@ class SearchPage extends React.Component {
 
           </div>
         </div>
+        <div className="search-books-results">
+          <ol className="books-grid"></ol>
+        </div>
       </div>
     )
   }
 }
+
+export default SearchPage
