@@ -19,9 +19,7 @@ class BooksApp extends React.Component {
       <div className="app">
         {this.state.showSearchPage ? (
 
-            <div className="search-books-results">
-              <ol className="books-grid"></ol>
-            </div>
+
           </div>
         ) : (
           <div className="list-books">
@@ -179,9 +177,7 @@ class BooksApp extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
-            </div>
+            
           </div>
         )}
       </div>

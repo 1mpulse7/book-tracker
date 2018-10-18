@@ -5,7 +5,9 @@ class Shelf extends React.Component {
   render() {
     return (
       <section className="bookshelf">
-        <h3 className="bookshelf-title">{this.props.title}</h3>
+        <h3 className="bookshelf-title">{this.props.shelf.title}</h3>
+        <ol className="books-grid">
+        </ol>
       </section>
     )
   }
