@@ -1,6 +1,6 @@
 import React, { component } from 'react';
 
-class ActionButton extends React.Component {
+class SearchActionButton extends React.Component {
   render() {
     return (
       <div className="open-search">
@@ -10,4 +10,4 @@ class ActionButton extends React.Component {
   }
 }
 
-export default ActionButton;
+export default SearchActionButton;

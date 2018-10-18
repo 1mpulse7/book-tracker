@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Shelf from '../components/shelf.js';
-import ActionButton from '../components/ActionButton.js';
+import SearchActionButton from '../components/searchActionButton.js';
 
 
 
@@ -45,10 +45,11 @@ class BookShelf extends React.Component {
             {shelves && shelves.map((shelf) => (<Shelf
               key={shelf.title}
               shelf={shelf}
+              onChangeShelves={this.props.onChangeShelves}
             />))}
           </div>
         </section>
-        <ActionButton/>
+        <SearchActionButton/>
       </div>
     )
   }

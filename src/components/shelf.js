@@ -9,7 +9,7 @@ class Shelf extends React.Component {
         <ol className="books-grid">
         {this.props.shelf.books.map((book) => (
           <li key={book.id}>
-            <BookCreator book={book} />
+            <BookCreator book={book} onChangeShelves={this.props.onChangeShelves} />
           </li>
         ))}
         </ol>
