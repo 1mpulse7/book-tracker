@@ -3,7 +3,7 @@ import './App.css';
 import {Switch, Route} from 'react-router-dom';
 import BookShelf from './views/Home.js';
 import SearchPage from './views/Search.js';
-import {getAll, update} from './BooksAPI.js'
+import * as BooksAPI from './BooksAPI.js'
 
 class BooksApp extends React.Component {
   state = {
@@ -17,7 +17,7 @@ class BooksApp extends React.Component {
   }
 
   refreshAllBooks = () => {
-    getAll()
+    BooksAPI.getAll()
     .then((list) => {
       this.setState({
         books: (list),
@@ -27,7 +27,7 @@ class BooksApp extends React.Component {
   }
 
   changeShelves = (book, shelf) => {
-    update(book, shelf)
+    BooksAPI.update(book, shelf)
     .then((response) => {
       let newBookList = this.state.books.slice(0);
 
@@ -46,15 +46,18 @@ class BooksApp extends React.Component {
 
   render() {
     return (
-      <body className="app">
+      <div className="app">
       <Switch>
         <Route exact path={"/"} render={(props) => <BookShelf
           {...this.state.refreshAllBooks} books={this.state.books}
           onRefreshAllBooks={this.refreshAllBooks}
           onChangeShelves={this.changeShelves} /> } />
-        <Route exact path={"/search"} component={SearchPage} />
+        <Route exact path={"/search"} render={(props) => <SearchPage
+          {...this.state.refreshAllBooks} books={this.state.books}
+          onRefreshAllBooks={this.refreshAllBooks}
+          onChangeShelves={this.changeShelves} /> } />
       </Switch>
-      </body>
+      </div>
     )
   }
 }

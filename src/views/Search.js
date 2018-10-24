@@ -1,9 +1,31 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import * as BooksAPI from '../BooksAPI.js'
+import BookCreator from '../components/book.js'
 
 // component for adding search page
 
 class SearchPage extends React.Component {
+  state = {
+    query: "",
+    books: [],
+  }
+
+  updateSearch = (value) => {
+    let newBookList = [];
+
+    this.setState({query: value})
+
+     BooksAPI.search(this.state.query)
+     .then(response => {
+       newBookList = response;
+       this.setState({books: newBookList})
+     })
+  }
+
+  componentWillReceiveProps(props) {
+    this.props = props;
+  }
   render() {
     return (
       <div className="search-books">
@@ -18,12 +40,22 @@ class SearchPage extends React.Component {
               However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
               you don't find a specific author or title. Every search is limited by search terms.
             */}
-            <input type="text" placeholder="Search by title or author"/>
+            <input
+              type="text"
+              placeholder="Search by title or author"
+              onChange={(event) => this.updateSearch(event.target.value)}
+              value={this.state.query.value}/>
 
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid"></ol>
+          <ol className="books-grid">
+            {this.state.books && this.state.books.map((book) => (
+              <li key={book.id}>
+                <BookCreator book={book} onChangeShelves={this.props.onChangeShelves} />
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     )
