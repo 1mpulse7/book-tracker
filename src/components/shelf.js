@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import BookCreator from './book.js'
 
 class Shelf extends React.Component {

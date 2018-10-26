@@ -1,4 +1,4 @@
-import React, { component } from 'react';
+import React from 'react';
 import {Link} from 'react-router-dom';
 
 class SearchActionButton extends React.Component {

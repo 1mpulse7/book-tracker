@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import ShelfActionButton from './shelfActionButton.js'
 
 class BookCreator extends React.Component {
@@ -7,6 +7,7 @@ class BookCreator extends React.Component {
   }
 
   render() {
+    // putting authors inside of this variable with the .join allows for multiple authors without throwing an error
     const authors = this.props.book.authors && this.props.book.authors.join(' | ');
 
     let url = (this.props.book.imageLinks && `url(${this.props.book.imageLinks.thumbnail})`);

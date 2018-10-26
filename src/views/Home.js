@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import Shelf from '../components/shelf.js';
 import SearchActionButton from '../components/searchActionButton.js';
 
@@ -14,6 +14,8 @@ class BookShelf extends React.Component {
   }
 
   updateShelves = () => {
+
+    //the different objects filter the books for creation into their respective shelves
     const currentlyReading = {
       title: 'Currently Reading',
       books: this.props.books.filter((book) => book.shelf === 'currentlyReading')

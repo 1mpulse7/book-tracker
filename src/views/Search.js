@@ -3,18 +3,28 @@ import {Link} from 'react-router-dom';
 import * as BooksAPI from '../BooksAPI.js'
 import BookCreator from '../components/book.js'
 
-// component for adding search page
-
 class SearchPage extends React.Component {
   state = {
     query: "",
     books: [],
   }
 
-  updateSearch = (value) => {
+  queryTimer = null;
+
+  queryDebounce = (value) => {
+    clearTimeout(this.queryTimer);
+    this.setState({query: value});
+    this.queryTimer = setTimeout(this.updateSearch, 250);
+
+  }
+
+  updateSearch = () => {
     let newBookList = [];
 
-    this.setState({query: value})
+    if (this.state.query === "") {
+      this.setState({books: []})
+      return;
+    }
 
      BooksAPI.search(this.state.query)
      .then(response => {
@@ -43,7 +53,7 @@ class SearchPage extends React.Component {
             <input
               type="text"
               placeholder="Search by title or author"
-              onChange={(event) => this.updateSearch(event.target.value)}
+              onChange={(event) => this.queryDebounce(event.target.value)}
               value={this.state.query.value}/>
 
           </div>

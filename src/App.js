@@ -6,9 +6,7 @@ import SearchPage from './views/Search.js';
 import * as BooksAPI from './BooksAPI.js'
 
 class BooksApp extends React.Component {
-  state = {
-    //not used yet
-  }
+  state = {}
 
   componentDidMount = () => {
     if(this.state.newBook) {
