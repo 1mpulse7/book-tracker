@@ -14,8 +14,22 @@ class SearchPage extends React.Component {
   queryDebounce = (value) => {
     clearTimeout(this.queryTimer);
     this.setState({query: value});
-    this.queryTimer = setTimeout(this.updateSearch, 250);
+    this.queryTimer = setTimeout(this.updateSearch, 500);
 
+  }
+
+  shelfAndSearchTable = (booksOnShelf, booksOnSearch) => {
+    //this function updates the books to show whether or not they are already
+    //on a shelf.
+    const table = {};
+
+    booksOnShelf.forEach((book) => table[book.id] = book.shelf);
+
+    booksOnSearch.forEach((book) => {
+      book.shelf = table[book.id] || 'none';
+    });
+
+    return booksOnSearch
   }
 
   updateSearch = () => {
@@ -28,9 +42,13 @@ class SearchPage extends React.Component {
 
      BooksAPI.search(this.state.query)
      .then(response => {
-       newBookList = response;
-       this.setState({books: newBookList})
-     })
+       newBookList = this.shelfAndSearchTable(this.props.books, response);
+       if (newBookList.length > 0) {
+         this.setState({books: newBookList})
+       } else {
+       this.setState({books:[]})
+     }
+   })
   }
 
   componentWillReceiveProps(props) {
