@@ -5,7 +5,7 @@ that divides books into three shelves; Currently Reading, Want to Read, and Read
 There is also a search button that takes you to a page to search for more books held on
 a back-end server. The search is limited by search terms.
 
-## TL;DR
+## To Run Project
  In order to run the project, all that should need to be done is to run the commands
  'npm install' and 'npm start'. This will start a development server and launch a
  test version of the project.
