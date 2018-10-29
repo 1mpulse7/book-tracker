@@ -23,11 +23,15 @@ class SearchPage extends React.Component {
     //on a shelf.
     const table = {};
 
-    booksOnShelf.forEach((book) => table[book.id] = book.shelf);
+    if(booksOnShelf.length > 0 && booksOnSearch.length > 0) {
+      booksOnShelf.forEach((book) => table[book.id] = book.shelf);
 
-    booksOnSearch.forEach((book) => {
-      book.shelf = table[book.id] || 'none';
-    });
+      booksOnSearch.forEach((book) => {
+        book.shelf = table[book.id] || 'none';
+      });
+    } else {
+      console.log('error')
+    }
 
     return booksOnSearch
   }
@@ -51,9 +55,10 @@ class SearchPage extends React.Component {
    })
   }
 
-  componentWillReceiveProps(props) {
-    this.props = props;
+  componentDidMount = () => {
+    this.props.onRefreshAllBooks();
   }
+
   render() {
     return (
       <div className="search-books">
